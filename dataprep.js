@@ -7,14 +7,28 @@ async function makeJSON(csv, limit, istest) {
         // Reversing the comma delimiting and casting to int
         data = data.map(row => row.split(',').map(e => parseInt(e)))
 
-        // Making the JSON Array
+        // Data will be stored in json variable
         const json = []
+        // Limit of storage
         if (!limit) limit = data.length
-        for (let i = 0; i < limit; i++) {
-            // There are no labels for test data
-            if (istest) json.push({pixels: data[i]})
-            // There are labels for train data
-            else json.push({ label: data[i].shift(), pixels: data[i] })
+
+        // In test data, there are just pixel values
+        if (istest) {
+            for (let i = 0; i < limit; i++) json.push(data[i])
+        }
+
+        // In train data, there are pixels and labels
+        else {
+            json.push([], [])
+            for (let i = 0; i < limit; i++) {
+                // Labels is a one-hot encoded array
+                const labels = Array(10).fill(0)
+                labels[data[i].shift()] = 1
+
+                // Pushing pixels and labels
+                json[0].push(data[i])
+                json[1].push(labels)
+            }
         }
         return JSON.stringify(json)
     }).catch(console.error)

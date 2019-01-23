@@ -31,7 +31,8 @@ fetch('data/json/train.json').then(data => data.json())
             epochs: 10,
             callbacks: {
                 // Printing the loss over time
-                onEpochEnd: console.log
+                onEpochEnd: console.log,
+                onTrainEnd: test
             }
         })
     }).catch(console.error)

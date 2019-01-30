@@ -3,7 +3,7 @@ const model = tf.sequential()
 model.add(tf.layers.dense({
     units: 16, 
     inputShape: [784], 
-    activation: 'softmax'
+    activation: 'relu'
 }))
 // Output layer
 model.add(tf.layers.dense({
@@ -18,10 +18,10 @@ model.compile({
 })
 
 // Fetching the dataset
-fetch('data/json/train.json').then(data => data.json())
+fetch('data/json/train_full.json').then(data => data.json())
     .then(data => {
         // Getting inputs and labels from the training dataset
-        const inputs = data.shift()
+        const inputs = data.shift().map(img => img.map(pixel => pixel / 255))
         const labels = data.shift()
         const xs = tf.tensor(inputs, [inputs.length, 784])
         const ys = tf.tensor(labels, [labels.length, 10])
@@ -35,5 +35,7 @@ fetch('data/json/train.json').then(data => data.json())
                 onTrainEnd: test
             }
         })
+        // Uncomment to save the model
+        // .then(() => model.save('downloads://dclf'))
     }).catch(console.error)
 

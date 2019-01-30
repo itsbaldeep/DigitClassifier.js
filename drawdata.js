@@ -21,9 +21,11 @@ async function drawpixels(data) {
     const pos = {x: 0, y: 0}
 
     // Predicting the label
-    const guess = await model.predict(tf.tensor(data, [data.length, 784])).data()
+    const data_n = data.map(img => img.map(pixel => pixel / 255))
+    const guess = await model.predict(tf.tensor(data_n, [data_n.length, 784])).data()
     
     // One Hot encoding and pushing it to labels array
+    labels.splice(0, labels.length)
     let index = 0
     while (index < guess.length) {
         const subarray = guess.subarray(index, index + 10)

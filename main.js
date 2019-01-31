@@ -1,3 +1,11 @@
+// Testing the model with user drawings
+async function test(model) {
+    const xs = extract()
+    const guess = await model.predict(tf.tensor(xs, [1, 784])).data()
+    const digit = guess.indexOf(Math.max(...guess))
+    console.log(digit)
+}
+
 // Loading the saved model
 fetch('model/dclf.weights.bin').then(data => data.blob())
     .then(data => new File([data], 'dclf.weights.bin'))

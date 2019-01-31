@@ -64,7 +64,7 @@ async function drawpixels(data, model) {
 }
 
 function test(model) {
-    fetch('data/json/test.json')
+    fetch('test.json')
         .then(data => data.json())
         .then(data => drawpixels(data, model))
         .catch(console.error)

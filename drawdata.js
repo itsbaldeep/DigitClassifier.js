@@ -11,7 +11,7 @@ document.body.appendChild(canvas)
 // Array holding labels
 const labels = []
 
-async function drawpixels(data) {
+async function drawpixels(data, model) {
 
     // Adjusting canvas size to fit all images
     canvas.width = window.innerWidth - window.innerWidth % size
@@ -63,9 +63,9 @@ async function drawpixels(data) {
     }
 }
 
-function test() {
+function test(model) {
     fetch('data/json/test.json')
         .then(data => data.json())
-        .then(drawpixels)
+        .then(data => drawpixels(data, model))
         .catch(console.error)
 }

@@ -2,9 +2,10 @@
 const canvas = document.createElement('canvas')
 const context = canvas.getContext('2d')
 document.body.appendChild(canvas)
+const offset = 38
 
 // Adjusting its style
-canvas.height = Math.min(window.innerWidth, window.innerHeight)
+canvas.height = Math.min(window.innerWidth, window.innerHeight - offset)
 canvas.width = canvas.height
 canvas.style.backgroundColor = '#000'
 
@@ -44,11 +45,11 @@ function move(x, y) {
 }
 
 // Mouse events
-canvas.onmousedown = e => down(e.clientX, e.clientY)
-canvas.onmousemove = e => move(e.clientX, e.clientY)
+canvas.onmousedown = e => down(e.clientX, e.clientY - offset)
+canvas.onmousemove = e => move(e.clientX, e.clientY - offset)
 canvas.onmouseup = _ => drawing = false
 
 // Touch events
-canvas.ontouchstart = e => down(e.touches[0].clientX, e.touches[0].clientY)
-canvas.ontouchmove = e => move(e.touches[0].clientX, e.touches[0].clientY)
+canvas.ontouchstart = e => down(e.touches[0].clientX, e.touches[0].clientY - offset)
+canvas.ontouchmove = e => move(e.touches[0].clientX, e.touches[0].clientY - offset)
 canvas.ontouchend = _ => drawing = false
